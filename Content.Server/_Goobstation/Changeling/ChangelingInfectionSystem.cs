@@ -57,6 +57,19 @@ public sealed partial class ChangelingInfectionSystem : EntitySystem
 
         EnsureComp<ChangelingInfectionComponent>(ev.Implanted.Value);
 
+        // Do setup
+
+        if (!EntityManager.TryGetComponent(ev.Implanted.Value, out ChangelingInfectionComponent? infectComp))
+            return;
+
+        infectComp.FirstSymptoms = _timing.CurTime + TimeSpan.FromSeconds(60f);
+
+        infectComp.KnockedOut = _timing.CurTime + TimeSpan.FromSeconds(900f);
+
+        infectComp.FullyInfected = _timing.CurTime + TimeSpan.FromSeconds(2700f);
+
+        infectComp.EffectsTimerDelay = 7.5f;
+
         _popupSystem.PopupEntity(Loc.GetString("changeling-convert-implant"), ev.Implanted.Value, ev.Implanted.Value, PopupType.LargeCaution);
     }
 
