@@ -62,13 +62,11 @@ public sealed partial class ChangelingInfectionSystem : EntitySystem
         if (!EntityManager.TryGetComponent(ev.Implanted.Value, out ChangelingInfectionComponent? infectComp))
             return;
 
-        infectComp.NeedsInitialization = false; // AVOID having comp reinit, that will fuck things
+        infectComp.FirstSymptomsDelay = 60f;
 
-        infectComp.FirstSymptoms = _timing.CurTime + TimeSpan.FromSeconds(60f);
+        infectComp.KnockedOutDelay = 900f;
 
-        infectComp.KnockedOut = _timing.CurTime + TimeSpan.FromSeconds(900f);
-
-        infectComp.FullyInfected = _timing.CurTime + TimeSpan.FromSeconds(2700f);
+        infectComp.FullyInfectedDelay = 2700f;
 
         infectComp.EffectsTimerDelay = 7.5f;
 
